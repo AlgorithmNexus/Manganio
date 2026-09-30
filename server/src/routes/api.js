@@ -1,0 +1,12 @@
+import {Router} from 'express';
+import {mines,production,alerts,recommendations,prospectivity} from '../data/demo.js';
+const r=Router();
+r.get('/dashboard',(q,s)=>s.json({kpis:{resource:'34.9 Mt',coverage:'78.4%',mines:4,confidence:'76.8%'},mines,production,alerts,recommendations,prospectivity}));
+r.get('/mines',(q,s)=>s.json(mines));
+r.get('/mines/:id',(q,s)=>{const m=mines.find(x=>x.id===q.params.id)||mines[0];s.json(m)});
+r.get('/production',(q,s)=>s.json(production));
+r.get('/alerts',(q,s)=>s.json(alerts));
+r.get('/insights',(q,s)=>s.json(recommendations));
+r.get('/prospectivity',(q,s)=>s.json(prospectivity));
+r.get('/reserves',(q,s)=>s.json(mines.map(m=>({name:m.name,resource:m.resource,reserve:m.reserve,grade:m.grade,confidence:m.confidence,area:m.area,depth:m.depth}))));
+export default r;
